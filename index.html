@@ -683,7 +683,7 @@ footer{padding:40px 5vw;background:var(--g0);border-top:1px solid var(--border)}
         <div style="display:flex;justify-content:space-between;font-size:12px;padding:6px 0;border-bottom:1px solid var(--border)"><span style="color:var(--text2)">Min. Ticket Size</span><span style="color:var(--white);font-weight:600">$25,000</span></div>
         <div style="display:flex;justify-content:space-between;font-size:12px;padding:6px 0"><span style="color:var(--text2)">Next Milestone</span><span style="color:var(--g5);font-weight:600">Series A ($2–3M)</span></div>
       </div>
-      <a href="mailto:contact@terravo.io?subject=Terravo Seed Round Inquiry" class="btn-primary" style="display:block;text-align:center;text-decoration:none">📧 Request Full IR Deck</a>
+      <a href="/cdn-cgi/l/email-protection#ea8985849e8b899eaa9e8f98988b9c85c48385d5999f88808f899ed7be8f98988b9c85cab98f8f8ecab8859f848ecaa3849b9f839893" class="btn-primary" style="display:block;text-align:center;text-decoration:none">📧 Request Full IR Deck</a>
     </div>
 
     <!-- 자금 사용처 -->
@@ -828,8 +828,16 @@ footer{padding:40px 5vw;background:var(--g0);border-top:1px solid var(--border)}
 
             <!-- MRV -->
             <div class="demo-page" id="dp-mrv">
+
+              <!-- 계절 경고 배너 (항상 표시, JS로 제어) -->
+              <div id="mrv-seasonal-warning" style="display:none;background:#1a1400;border:1px solid #d4870a;border-radius:8px;padding:10px 14px;margin-bottom:10px">
+                <div style="font-size:11px;font-weight:700;color:#d4870a;margin-bottom:4px">⚠️ Off-Season Notice</div>
+                <div id="mrv-seasonal-msg" style="font-size:10px;color:#a07830;line-height:1.6"></div>
+              </div>
+
               <div class="d-card">
-                <div class="d-card-title">Run MRV Calculation</div>
+                <div class="d-card-title">🛰️ MRV · VMD0053 v2.1</div>
+
                 <div class="d-form-group">
                   <label class="d-label">Select Farm</label>
                   <select class="d-select" id="mrv-farm">
@@ -838,23 +846,74 @@ footer{padding:40px 5vw;background:var(--g0);border-top:1px solid var(--border)}
                     <option value="gobi">Gobi Herder 1 — Dundgovi, MN (420 ha)</option>
                   </select>
                 </div>
+
                 <button class="d-btn" onclick="runMRV()" id="mrv-btn" style="width:100%;padding:10px;font-size:12px">🛰️ Calculate MRV</button>
                 <div id="mrv-progress" style="margin-top:10px;font-family:var(--mono);font-size:10px;color:#6b7280;display:none"></div>
-                <div id="mrv-result" style="display:none">
+
+                <div id="mrv-result" style="display:none;margin-top:12px">
+
+                  <!-- 핵심 수치 4개 -->
                   <div class="d-mrv-result">
-                    <div class="d-mrv-title">🛰 MRV Report · Satellite-Verified</div>
-                    <div class="d-mrv-metrics">
-                      <div class="d-mrv-m"><div class="d-mrv-m-val" id="mrv-co2">—</div><div class="d-mrv-m-label">tCO₂e / yr</div></div>
+                    <div class="d-mrv-title">🛰 MRV Report · VMD0053 v2.1 Compliant</div>
+                    <div class="d-mrv-metrics" style="grid-template-columns:repeat(4,1fr)">
+                      <div class="d-mrv-m"><div class="d-mrv-m-val" id="mrv-co2">—</div><div class="d-mrv-m-label">Predicted tCO₂e</div></div>
+                      <div class="d-mrv-m"><div class="d-mrv-m-val" id="mrv-final">—</div><div class="d-mrv-m-label">Final Credit</div></div>
                       <div class="d-mrv-m"><div class="d-mrv-m-val" id="mrv-unc">—</div><div class="d-mrv-m-label">Uncertainty</div></div>
                       <div class="d-mrv-m"><div class="d-mrv-m-val" id="mrv-rev">—</div><div class="d-mrv-m-label">Farmer Gets</div></div>
                     </div>
-                    <div style="margin-top:10px;font-size:10px;color:#4a6a54;font-family:var(--mono)" id="mrv-verra-status"></div>
+                    <div style="font-family:var(--mono);font-size:9px;margin-top:8px;padding:6px 8px;background:#0a1f10;border-radius:4px" id="mrv-verra-status"></div>
                   </div>
+
+                  <!-- VMD0053 공제 상세 -->
+                  <div style="background:#fff;border:1px solid #e5e7eb;border-radius:8px;padding:12px;margin-top:8px">
+                    <div style="font-family:var(--mono);font-size:9px;color:#1a6b3c;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px">
+                      📋 VMD0053 v2.1 — Credit Deduction Detail
+                    </div>
+                    <div id="mrv-vmd-rows" style="display:flex;flex-direction:column;gap:2px"></div>
+                    <div style="margin-top:10px;background:#0f2d1a;border-radius:6px;padding:8px 12px;display:flex;justify-content:space-between;align-items:center">
+                      <span style="font-family:var(--mono);font-size:9px;color:#4ade80;letter-spacing:.5px">FINAL CREDIT ISSUED</span>
+                      <span style="font-family:var(--serif);font-size:20px;color:#4ade80" id="mrv-final-big">—</span>
+                    </div>
+                  </div>
+
+                  <!-- Confidence Score -->
+                  <div style="background:#fff;border:1px solid #e5e7eb;border-radius:8px;padding:12px;margin-top:8px">
+                    <div style="font-family:var(--mono);font-size:9px;color:#1a6b3c;letter-spacing:1px;text-transform:uppercase;margin-bottom:10px">
+                      🎯 Confidence Score — Hybrid MRV (Satellite 90% + Field 10%)
+                    </div>
+                    <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+                      <div style="flex:1;background:#f3f4f6;border-radius:100px;height:10px;overflow:hidden">
+                        <div id="mrv-conf-bar" style="height:100%;border-radius:100px;transition:width .6s;width:0%"></div>
+                      </div>
+                      <div style="font-family:var(--serif);font-size:22px;color:#1a1a1a;flex-shrink:0;min-width:48px;text-align:right" id="mrv-conf-score">—</div>
+                    </div>
+                    <div style="font-size:11px;margin-bottom:6px" id="mrv-conf-note"></div>
+                    <div id="mrv-field-badge" style="display:inline-block;padding:4px 10px;border-radius:100px;font-size:10px;font-family:var(--mono)"></div>
+                  </div>
+
+                  <!-- SOC 0-30cm + Dynamic Baseline -->
+                  <div style="background:#fff;border:1px solid #e5e7eb;border-radius:8px;padding:12px;margin-top:8px">
+                    <div style="font-family:var(--mono);font-size:9px;color:#1a6b3c;letter-spacing:1px;text-transform:uppercase;margin-bottom:10px">
+                      🌱 SOC (0–30cm) + Dynamic Baseline Additionality
+                    </div>
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;font-size:11px;margin-bottom:10px">
+                      <div style="color:#6b7280">SOC 0–30cm (VM0042)</div>
+                      <div style="font-weight:600;color:#1a1a1a" id="mrv-soc">—</div>
+                      <div style="color:#6b7280">Baseline LSWI (pre-project)</div>
+                      <div style="font-weight:600;color:#1a1a1a" id="mrv-bl-lswi">—</div>
+                      <div style="color:#6b7280">Current LSWI (AWD)</div>
+                      <div style="font-weight:600;color:#1a6b3c" id="mrv-cu-lswi">—</div>
+                      <div style="color:#6b7280">Financial barrier</div>
+                      <div style="font-size:10px;color:#6b7280">AWD not legally mandated ✓</div>
+                    </div>
+                    <div id="mrv-additionality" style="padding:6px 10px;border-radius:6px;font-size:10px;font-weight:600"></div>
+                  </div>
+
                 </div>
               </div>
             </div>
 
-            <!-- MARKETPLACE -->
+                        <!-- MARKETPLACE -->
             <div class="demo-page" id="dp-market">
               <div class="d-card">
                 <div class="d-card-title">Carbon Credit Marketplace <button class="d-btn d-btn-sm" onclick="loadMarket()">↻ Refresh</button></div>
@@ -961,7 +1020,7 @@ footer{padding:40px 5vw;background:var(--g0);border-top:1px solid var(--border)}
   <p class="section-sub">$300K Seed · SAFE · 20% discount · $3M cap. Vietnam pilot complete. Plan Vivo certification in progress.</p>
   <div class="cta-buttons">
     <a href="#investors" class="btn-primary">💰 View Investor Terms</a>
-    <a href="mailto:contact@terravo.io" class="btn-ghost">📧 contact@terravo.io</a>
+    <a href="/cdn-cgi/l/email-protection#e5868a8b91848691a59180979784938acb8c8a" class="btn-ghost">📧 <span class="__cf_email__" data-cfemail="e685898892878592a692839494879089c88f89">[email&#160;protected]</span></a>
     <a href="#demo" class="btn-ghost">▶ Live Demo</a>
   </div>
 </div>
@@ -974,13 +1033,13 @@ footer{padding:40px 5vw;background:var(--g0);border-top:1px solid var(--border)}
       <a href="#how">How It Works</a>
       <a href="#technology">Tech</a>
       <a href="#demo">Demo</a>
-      <a href="mailto:contact@terravo.io">Contact</a>
+      <a href="/cdn-cgi/l/email-protection#10737f7e64717364506475626271667f3e797f">Contact</a>
     </div>
     <div class="footer-copy">© 2026 Terravo · terravo.io</div>
   </div>
 </footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // ── DEMO STATE
 const farms = [
   {id:'khiet',name:'Khiet Tam A',area:2.2,lat:10.2356,lng:105.1805,method:'AWD Rice',country:'Vietnam',status:'done',co2:12.23,unc:12,rev:161.45},
@@ -1052,42 +1111,173 @@ function registerFarm() {
 
 // MRV
 const mrvData = {
-  khiet:{co2:'12.23',unc:'±12%',rev:'$161.45',verra:'✓ Verra Tier 2 Eligible (threshold: <15%)'},
-  phu:{co2:'17.42',unc:'±9%',rev:'$229.95',verra:'✓ Verra Tier 2 Eligible (threshold: <15%)'},
-  gobi:{co2:'31.8',unc:'±6%',rev:'$529.15',verra:'✓ Verra Tier 2 Eligible (threshold: <15%)'},
+  // 재배 시즌(5~11월) 기준 MRV 데이터
+  // 현재 3월은 수확 후 휴경기 — 비수기 설명 포함
+  khiet:{
+    co2:'12.23', finalCredit:'10.07', unc:'±12%', rev:'$133.00',
+    verra:'✓ Verra Tier 2 Eligible (threshold: <15%)',
+    predicted:12.23, uncPct:12,
+    conservative:10.77, bufferRate:0.10, final:10.07,
+    conf:82, needsField:false, fieldPriority:'LOW',
+    soc:'21.4 g/kg', blLswi:'0.44', cuLswi:'0.21',
+    additionality:true,
+    seasonal: false,
+  },
+  phu:{
+    co2:'17.42', finalCredit:'14.41', unc:'±9%', rev:'$190.21',
+    verra:'✓ Verra Tier 2 Eligible (threshold: <15%)',
+    predicted:17.42, uncPct:9,
+    conservative:15.84, bufferRate:0.10, final:14.41,
+    conf:88, needsField:false, fieldPriority:'LOW',
+    soc:'19.8 g/kg', blLswi:'0.41', cuLswi:'0.19',
+    additionality:true,
+    seasonal: false,
+  },
+  gobi:{
+    co2:'31.8', finalCredit:'25.70', unc:'±6%', rev:'$565.40',
+    verra:'✓ Verra Tier 2 Eligible (threshold: <15%)',
+    predicted:31.8, uncPct:6,
+    conservative:29.89, bufferRate:0.10, final:25.70,
+    conf:91, needsField:false, fieldPriority:'LOW',
+    soc:'28.1 g/kg', blLswi:'0.12', cuLswi:'0.08',
+    additionality:true,
+    seasonal: false,
+  },
 };
+
+// 현재 월 기준 비수기 여부 확인
+function isOffSeason() {
+  const month = new Date().getMonth() + 1; // 1~12
+  // 베트남 메콩델타: 수확기 3~4월, 휴경기 4월
+  // 재배 시즌: 5~11월
+  return month >= 3 && month <= 4;
+}
+
+function getSeasonalMessage(farm) {
+  const month = new Date().getMonth() + 1;
+  const monthNames = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const isVN = farm === 'khiet' || farm === 'phu';
+  if(isVN && isOffSeason()) {
+    return {
+      show: true,
+      msg: `Current date: ${monthNames[month-1]} — Vietnam Mekong Delta is in post-harvest off-season (Mar–Apr). ` +
+           `Rice fields are empty after winter-spring crop harvest, causing low NDVI (~0.3). ` +
+           `MRV values shown below are based on peak growing season (May–Nov) satellite data from prior year. ` +
+           `Live calculation during growing season will return higher confidence (±2.9% target).`
+    };
+  }
+  return { show: false, msg: '' };
+}
+
 function loadMRV(name) {
   dNav('mrv');
   if(name.includes('Khiet')) document.getElementById('mrv-farm').value='khiet';
   else if(name.includes('Phu')) document.getElementById('mrv-farm').value='phu';
 }
+
 function runMRV() {
   const farm = document.getElementById('mrv-farm').value;
   const prog = document.getElementById('mrv-progress');
-  const res = document.getElementById('mrv-result');
-  const btn = document.getElementById('mrv-btn');
+  const res  = document.getElementById('mrv-result');
+  const btn  = document.getElementById('mrv-btn');
+  const warn = document.getElementById('mrv-seasonal-warning');
+
   res.style.display='none'; prog.style.display='block'; btn.disabled=true;
+
   const steps = [
-    '→ Fetching Sentinel-2 data (2yr window)...',
-    '→ Processing SAR VV/VH backscatter...',
-    '→ Running RandomForest inference (25 features)...',
-    '→ Applying Verra VM0017 methodology...',
-    '✓ MRV calculation complete',
+    '→ Fetching Sentinel-2 data (3yr window, cloud threshold 60%)...',
+    '→ Processing SAR VV/VH backscatter (monsoon-penetrating)...',
+    '→ Running RandomForest v03 inference (26 features)...',
+    '→ Applying VMD0053 v2.1 uncertainty deduction...',
+    '→ Calculating Dynamic Baseline (5yr historical LSWI)...',
+    '→ Computing Confidence Score + field sampling check...',
+    '✓ VMD0053-compliant MRV report generated',
   ];
+
   let i=0; prog.textContent=steps[0];
   const iv = setInterval(()=>{
     i++;
-    if(i<steps.length){prog.textContent=steps[i];}
-    else{
+    if(i<steps.length){ prog.textContent=steps[i]; }
+    else {
       clearInterval(iv); prog.style.display='none'; btn.disabled=false;
       const d = mrvData[farm];
-      document.getElementById('mrv-co2').textContent = d.co2;
-      document.getElementById('mrv-unc').textContent = d.unc;
-      document.getElementById('mrv-rev').textContent = d.rev;
-      document.getElementById('mrv-verra-status').textContent = d.verra;
+
+      // 계절 경고
+      const seasonal = getSeasonalMessage(farm);
+      if(seasonal.show) {
+        warn.style.display='block';
+        document.getElementById('mrv-seasonal-msg').textContent = seasonal.msg;
+      } else {
+        warn.style.display='none';
+      }
+
+      // 기본 수치
+      document.getElementById('mrv-co2').textContent    = d.co2;
+      document.getElementById('mrv-unc').textContent    = d.unc;
+      document.getElementById('mrv-final').textContent  = d.finalCredit + ' t';
+      document.getElementById('mrv-rev').textContent    = d.rev + '/yr';
+
+      // Verra 상태
+      const verraEl = document.getElementById('mrv-verra-status');
+      verraEl.textContent = d.verra;
+      verraEl.style.color = d.uncPct < 15 ? '#4ade80' : '#d4870a';
+
+      // VMD0053 공제 상세
+      const rows = document.getElementById('mrv-vmd-rows');
+      rows.innerHTML = `
+        <div style="display:flex;justify-content:space-between;font-size:10px;padding:3px 0;border-bottom:1px solid #1a3d28">
+          <span style="color:#8ab89a">① Predicted reduction</span>
+          <span style="color:#e8f5ed;font-family:var(--mono)">${d.predicted} tCO₂e</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:10px;padding:3px 0;border-bottom:1px solid #1a3d28">
+          <span style="color:#8ab89a">② Uncertainty deduction (${d.unc})</span>
+          <span style="color:#fbbf24;font-family:var(--mono)">− ${(d.predicted * d.uncPct/100).toFixed(2)} t</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:10px;padding:3px 0;border-bottom:1px solid #1a3d28">
+          <span style="color:#8ab89a">③ Conservative credit</span>
+          <span style="color:#e8f5ed;font-family:var(--mono)">${d.conservative} tCO₂e</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:10px;padding:3px 0">
+          <span style="color:#8ab89a">④ Buffer pool deduction (${d.bufferRate*100}%)</span>
+          <span style="color:#fbbf24;font-family:var(--mono)">− ${(d.conservative * d.bufferRate).toFixed(2)} t</span>
+        </div>
+      `;
+      document.getElementById('mrv-final-big').textContent = d.finalCredit + ' tCO₂e';
+
+      // Confidence Score
+      document.getElementById('mrv-conf-score').textContent = d.conf;
+      document.getElementById('mrv-conf-bar').style.width = d.conf + '%';
+      document.getElementById('mrv-conf-bar').style.background =
+        d.conf >= 80 ? '#1a6b3c' : d.conf >= 60 ? '#d4870a' : '#ef4444';
+      document.getElementById('mrv-conf-note').textContent =
+        d.conf >= 80 ? 'High confidence — satellite data sufficient' :
+        d.conf >= 60 ? 'Moderate — satellite data sufficient' :
+        'Low — field visit recommended';
+      const badgeEl = document.getElementById('mrv-field-badge');
+      if(d.needsField) {
+        badgeEl.style.background='#fef3cd'; badgeEl.style.color='#856404';
+        badgeEl.textContent = '🚨 Field visit required (' + d.fieldPriority + ' priority)';
+      } else {
+        badgeEl.style.background='#d4edde'; badgeEl.style.color='#1a6b3c';
+        badgeEl.textContent = '✅ Satellite-only MRV sufficient';
+      }
+
+      // SOC + Additionality
+      document.getElementById('mrv-soc').textContent = d.soc;
+      document.getElementById('mrv-bl-lswi').textContent = d.blLswi + ' (conventional flooding)';
+      document.getElementById('mrv-cu-lswi').textContent = d.cuLswi + ' (AWD practiced)';
+      const addEl = document.getElementById('mrv-additionality');
+      if(d.additionality) {
+        addEl.style.background='#d4edde'; addEl.style.color='#1a6b3c';
+        addEl.textContent = '✅ Additionality confirmed — LSWI reduction proves AWD transition';
+      } else {
+        addEl.style.background='#fee2e2'; addEl.style.color='#dc2626';
+        addEl.textContent = '⚠️ Additionality needs more historical data';
+      }
+
       res.style.display='block';
     }
-  },600);
+  },500);
 }
 
 function loadMarket() {
@@ -1110,7 +1300,7 @@ async function checkApi() {
 checkApi();
 setInterval(checkApi, 15000);
 
-// Smooth scroll for nav
+// Smooth scroll
 document.querySelectorAll('a[href^="#"]').forEach(a=>{
   a.addEventListener('click',e=>{
     const t=document.querySelector(a.getAttribute('href'));
