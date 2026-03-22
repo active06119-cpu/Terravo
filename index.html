@@ -265,8 +265,8 @@ footer{padding:40px 5vw;background:var(--g0);border-top:1px solid var(--border)}
     </div>
     <div class="hero-card">
       <div class="metric-grid">
-        <div class="metric"><div class="metric-val">0.988</div><div class="metric-label">Model R²</div></div>
-        <div class="metric"><div class="metric-val">±2.9%</div><div class="metric-label">Uncertainty</div></div>
+        <div class="metric"><div class="metric-val">0.980</div><div class="metric-label">Model R²</div></div>
+        <div class="metric"><div class="metric-val">±2.9%</div><div class="metric-label">AI Model Uncertainty</div></div>
         <div class="metric"><div class="metric-val">40×</div><div class="metric-label">Cost Reduction</div></div>
         <div class="metric"><div class="metric-val">✓ Verra</div><div class="metric-label">Tier 2 Eligible</div></div>
       </div>
@@ -277,10 +277,10 @@ footer{padding:40px 5vw;background:var(--g0);border-top:1px solid var(--border)}
         </div>
         <div class="report-row"><span class="report-key">Location</span><span class="report-val">Can Tho, Vietnam</span></div>
         <div class="report-row"><span class="report-key">NDVI (avg)</span><span class="report-val">0.725</span></div>
-        <div class="report-row"><span class="report-key">Sentinel-2 obs</span><span class="report-val">33 / 2yr window</span></div>
-        <div class="report-row"><span class="report-key">SAR obs</span><span class="report-val">147 / 2yr window</span></div>
+        <div class="report-row"><span class="report-key">Sentinel-2 obs</span><span class="report-val">33 / 3yr window</span></div>
+        <div class="report-row"><span class="report-key">SAR obs</span><span class="report-val">147 / 3yr window</span></div>
         <div class="report-row"><span class="report-key">Carbon (net)</span><span class="report-val green">12.23 tCO₂e / yr</span></div>
-        <div class="report-row"><span class="report-key">Uncertainty</span><span class="report-val amber">±12%</span></div>
+        <div class="report-row"><span class="report-key">Uncertainty</span><span class="report-val amber">±12% (pilot report)</span></div>
         <div class="report-row"><span class="report-key">Farmer revenue</span><span class="report-val green">$161.45 / yr</span></div>
       </div>
     </div>
@@ -313,14 +313,14 @@ footer{padding:40px 5vw;background:var(--g0);border-top:1px solid var(--border)}
       <div class="how-num">02</div>
       <div class="how-icon">🛰️</div>
       <div class="how-title">Satellite Data Pull</div>
-      <div class="how-desc">Google Earth Engine API fetches 2 years of Sentinel-2 optical + Sentinel-1 SAR radar data. Cloud-penetrating, year-round.</div>
+      <div class="how-desc">Google Earth Engine API fetches 3 years of Sentinel-2 optical + Sentinel-1 SAR radar data. Cloud-penetrating, year-round.</div>
       <div class="how-connector">›</div>
     </div>
     <div class="how-card">
       <div class="how-num">03</div>
       <div class="how-icon">🤖</div>
       <div class="how-title">AI Inference</div>
-      <div class="how-desc">25-feature RandomForest model (R²=0.988) estimates carbon reduction. Uncertainty ±2.9% — 5× better than Verra's 15% threshold.</div>
+      <div class="how-desc">26-feature RandomForest model (R²=0.980) estimates carbon reduction. Uncertainty ±2.9% — 5× better than Verra's 15% threshold.</div>
       <div class="how-connector">›</div>
     </div>
     <div class="how-card">
@@ -350,16 +350,16 @@ footer{padding:40px 5vw;background:var(--g0);border-top:1px solid var(--border)}
         <div class="tech-item">
           <div class="tech-icon">🧠</div>
           <div>
-            <div class="tech-name">RandomForest AI Model v02</div>
-            <div class="tech-detail">Trained on 15 real farm GPS coordinates × bootstrap augmentation = 492 samples. 25 features spanning satellite indices, weather (Open-Meteo), and soil carbon (ISRIC SoilGrids).</div>
-            <div class="tech-badge">Verra VM0017 Aligned</div>
+            <div class="tech-name">RandomForest AI Model v03</div>
+            <div class="tech-detail">Trained on 15 real farm GPS coordinates × bootstrap augmentation = 492 samples. 26 features spanning satellite indices, weather (Open-Meteo), and soil carbon (ISRIC SoilGrids).</div>
+            <div class="tech-badge">Verra VMD0053 v2.1 Aligned</div>
           </div>
         </div>
         <div class="tech-item">
           <div class="tech-icon">⚡</div>
           <div>
             <div class="tech-name">Google Earth Engine API</div>
-            <div class="tech-detail">Real-time satellite data retrieval via GEE Python API. 2-year observation window, 40% cloud threshold. Supports Vietnam AWD rice and Mongolia grassland SOC project types.</div>
+            <div class="tech-detail">Real-time satellite data retrieval via GEE Python API. 3-year observation window, 40% cloud threshold. Supports Vietnam AWD rice and Mongolia grassland SOC project types.</div>
             <div class="tech-badge">Live Connected</div>
           </div>
         </div>
@@ -374,17 +374,17 @@ footer{padding:40px 5vw;background:var(--g0);border-top:1px solid var(--border)}
       </div>
       <div>
         <div class="model-card">
-          <div class="model-card-title">AI Model Performance — v02</div>
+          <div class="model-card-title">AI Model Performance — v03</div>
           <div class="model-metrics">
-            <div class="model-metric"><div class="model-metric-val">0.988</div><div class="model-metric-label">R² Score</div></div>
-            <div class="model-metric"><div class="model-metric-val">0.988</div><div class="model-metric-label">CV R²</div></div>
+            <div class="model-metric"><div class="model-metric-val">0.980</div><div class="model-metric-label">R² Score</div></div>
+            <div class="model-metric"><div class="model-metric-val">0.985</div><div class="model-metric-label">CV R²</div></div>
             <div class="model-metric"><div class="model-metric-val">±2.9%</div><div class="model-metric-label">Uncertainty</div></div>
-            <div class="model-metric"><div class="model-metric-val">0.696</div><div class="model-metric-label">MAE (tCO₂e)</div></div>
+            <div class="model-metric"><div class="model-metric-val">0.642</div><div class="model-metric-label">MAE (tCO₂e)</div></div>
           </div>
           <div class="feature-list">
             <div class="feature-row"><span>✓</span><span>Verra Tier 2 threshold: &lt;15% uncertainty — Terravo: ±2.9% (5× better)</span></div>
-            <div class="feature-row"><span>✓</span><span>v01 (simulation): ±49.5% → v02 (real satellite): ±2.9% (17× improvement)</span></div>
-            <div class="feature-row"><span>✓</span><span>25 features: NDVI + EVI + LSWI + NDRE + SAR VV/VH + weather + soil</span></div>
+            <div class="feature-row"><span>✓</span><span>v01 (simulation): ±49.5% → v03 (real satellite): ±2.9% (17× improvement)</span></div>
+            <div class="feature-row"><span>✓</span><span>26 features: NDVI + EVI + LSWI + NDRE + SAR VV/VH + weather + soil</span></div>
             <div class="feature-row"><span>✓</span><span>Real pilot: Khiet Tam Cooperative, Can Tho — 12.23 tCO₂e verified</span></div>
             <div class="feature-row"><span>✓</span><span>Supports Vietnam AWD rice + Mongolia grassland SOC methods</span></div>
             <div class="feature-row"><span>✓</span><span>Data flywheel: more farms → better model → lower uncertainty</span></div>
@@ -740,7 +740,7 @@ footer{padding:40px 5vw;background:var(--g0);border-top:1px solid var(--border)}
         <div class="section-tag">Live Platform Demo</div>
         <h2 class="section-title" style="margin-bottom:0">The actual product.<br>Try it now.</h2>
       </div>
-      <div class="demo-note">⚠ Demo runs in offline mode — connect to local API for live GEE data</div>
+      <div class="demo-note">Demo mode — live satellite data available upon request</div>
     </div>
 
     <div class="demo-shell">
@@ -750,7 +750,7 @@ footer{padding:40px 5vw;background:var(--g0);border-top:1px solid var(--border)}
           <div class="demo-dot" style="background:#febc2e"></div>
           <div class="demo-dot" style="background:#28c840"></div>
         </div>
-        <div class="demo-url">terravo.io/platform</div>
+        <div class="demo-url">app.terravo.io/platform</div>
         <div class="demo-api-pill">
           <div class="demo-dot-status" id="api-dot"></div>
           <span id="api-label">API offline</span>
@@ -1009,7 +1009,7 @@ footer{padding:40px 5vw;background:var(--g0);border-top:1px solid var(--border)}
       <div class="skill-tag">English · Korean</div>
       <div class="skill-tag">Climate Tech Entrepreneur</div>
     </div>
-    <div class="team-desc">Previously built S-SMDC (AI-optimized renewable energy data center). Independently developed Terravo's full AI pipeline — satellite data ingestion, RandomForest MRV model (R²=0.988), FastAPI backend, and full-stack dashboard. Currently completing B.A. in English Education.</div>
+    <div class="team-desc">Previously built S-SMDC (AI-optimized renewable energy data center). Independently developed Terravo's full AI pipeline — satellite data ingestion, RandomForest MRV model (R²=0.980, ±2.9%), FastAPI backend, and full-stack dashboard. Issued real Verra-eligible MRV report for Khiet Tam Cooperative, Can Tho. Fluent in English; experienced in global IR and cross-border partnership development.</div>
   </div>
 </section>
 
@@ -1035,7 +1035,7 @@ footer{padding:40px 5vw;background:var(--g0);border-top:1px solid var(--border)}
       <a href="#demo">Demo</a>
       <a href="/cdn-cgi/l/email-protection#10737f7e64717364506475626271667f3e797f">Contact</a>
     </div>
-    <div class="footer-copy">© 2026 Terravo · terravo.io</div>
+    <div class="footer-copy">© 2025–2026 Terravo · terravo.io</div>
   </div>
 </footer>
 
