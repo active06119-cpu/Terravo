@@ -241,13 +241,12 @@ footer{padding:40px 5vw;background:var(--g0);border-top:1px solid var(--border)}
 <nav>
   <div class="nav-logo">Terravo <span>Carbon · AI · MRV</span></div>
   <div class="nav-links">
-    <a href="#how" data-en="How It Works" data-ko="작동 방식">How It Works</a>
-    <a href="#technology" data-en="Technology" data-ko="기술">Technology</a>
-    <a href="#credits" data-en="Credits" data-ko="크레딧">Credits</a>
-    <a href="#competition" data-en="Competition" data-ko="경쟁사">Competition</a>
-    <a href="#demo" data-en="Live Demo" data-ko="라이브 데모">Live Demo</a>
-    <button onclick="toggleLang()" id="lang-btn" style="background:var(--g2);border:1px solid var(--g3);color:var(--g5);padding:6px 14px;border-radius:6px;font-family:var(--mono);font-size:11px;cursor:pointer;letter-spacing:1px;transition:all .2s">KO</button>
-    <a href="#investors" class="nav-cta" data-en="Invest →" data-ko="투자하기 →">Invest →</a>
+    <a href="#how">How It Works</a>
+    <a href="#technology">Technology</a>
+    <a href="#credits">Credits</a>
+    <a href="#competition">Competition</a>
+    <a href="#demo">Live Demo</a>
+    <a href="#investors" class="nav-cta">Invest →</a>
   </div>
 </nav>
 
@@ -1361,7 +1360,7 @@ function submitForm(e) {
   const message = document.getElementById('cf-message').value;
 
   btn.disabled = true;
-  btn.innerHTML = '<span>' + (currentLang==='ko' ? '전송 중...' : 'Sending...') + '</span>';
+  btn.innerHTML = '<span>Sending...</span>';
 
   const fd = new FormData();
   fd.append('entry.1177297341', name);
@@ -1383,146 +1382,11 @@ function submitForm(e) {
     })
     .finally(() => {
       btn.disabled  = false;
-      btn.innerHTML = '<span>' + (currentLang==='ko' ? '메시지 보내기' : 'Send Message') + '</span><span style="font-size:16px">→</span>';
+      btn.innerHTML = '<span>Send Message</span><span style="font-size:16px">→</span>';
     });
 }
 
-// ── LANG TOGGLE
-let currentLang = 'en';
-
-const i18n = {
-  'hero-pill': { en:'Pilot Complete · Vietnam', ko:'파일럿 완료 · 베트남' },
-  'hero-h1':   { en:'Carbon markets,<br><em>finally open</em><br>to smallholders.', ko:'탄소 시장,<br><em>드디어 열리다</em><br>소농에게.' },
-  'hero-sub':  { en:'Terravo automates MRV for smallholder farmers using AI and satellite data — cutting costs 40× while meeting Verra international standards.', ko:'Terravo는 AI와 위성 데이터로 소농의 MRV를 자동화합니다 — 비용을 40배 절감하면서 Verra 국제 기준을 충족합니다.' },
-  'hero-btn1': { en:'▶ View Live Demo',   ko:'▶ 라이브 데모 보기' },
-  'hero-btn2': { en:'Request IR Deck →',  ko:'IR 자료 요청 →' },
-  'stat1': { en:'VCM market size by 2030',         ko:'2030년 자발적 탄소시장 규모' },
-  'stat2': { en:'smallholders locked out today',   ko:'탄소시장에서 배제된 소농' },
-  'stat3': { en:'MRV cost per farm (vs $20K+)',    ko:'농가당 MRV 비용 (기존 $20K+)' },
-  'stat4': { en:'to certification (vs 3.6 years)', ko:'인증 소요기간 (기존 3.6년)' },
-  'how-tag': { en:'How It Works',   ko:'작동 방식' },
-  'how-h2':  { en:'From farm GPS to<br>verified carbon credit — in seconds.', ko:'농가 GPS 등록부터<br>탄소크레딧 검증까지 — 수초 안에.' },
-  'how-t1': { en:'Farm Registration',  ko:'농가 등록' },
-  'how-d1': { en:'Farmer or cooperative submits GPS boundary coordinates via web dashboard or API. No hardware required.', ko:'농가 또는 협동조합이 GPS 좌표를 웹 대시보드 또는 API로 제출합니다. 별도 장비 불필요.' },
-  'how-t2': { en:'Satellite Data Pull', ko:'위성 데이터 수집' },
-  'how-d2': { en:'Google Earth Engine API fetches 3 years of Sentinel-2 optical + Sentinel-1 SAR radar data. Cloud-penetrating, year-round.', ko:'GEE API로 3년치 Sentinel-2 광학 + SAR 레이더 데이터를 수집합니다. 구름 투과, 연중 측정 가능.' },
-  'how-t3': { en:'AI Inference',       ko:'AI 추론' },
-  'how-d3': { en:'26-feature RandomForest model (R²=0.980) estimates carbon reduction. Uncertainty ±2.9% — 5× better than Verra\'s 15% threshold.', ko:'26개 피처 RandomForest 모델(R²=0.980)로 탄소 감축량을 추정합니다. 불확실성 ±2.9% — Verra 기준의 5배 초과 달성.' },
-  'how-t4': { en:'Credit Issuance',    ko:'크레딧 발행' },
-  'how-d4': { en:'Verra-eligible MRV report auto-generated. Credits listed on marketplace. Farmer receives 88% of sale proceeds.', ko:'Verra 적격 MRV 리포트 자동 발행. 크레딧 마켓플레이스 등록. 농가가 판매 수익의 88% 수령.' },
-  'tech-tag': { en:'Technology',  ko:'기술' },
-  'tech-h2':  { en:'Built on open satellite data.<br>Zero marginal cost per farm.', ko:'무료 공개 위성 데이터 기반.<br>농가당 추가 비용 제로.' },
-  'mkt-tag': { en:'Target Markets', ko:'목표 시장' },
-  'mkt-h2':  { en:'Starting in Southeast Asia.<br>Scaling across Asia-Pacific.', ko:'동남아시아에서 시작.<br>아시아태평양 전체로 확장.' },
-  'mkt-sub': { en:'We go where the carbon potential is highest and the infrastructure is lowest — exactly where existing players don\'t serve.', ko:'탄소 잠재력이 가장 높고 인프라가 가장 부족한 곳 — 기존 사업자들이 진출하지 않는 바로 그 시장입니다.' },
-  'road-tag': { en:'Roadmap',  ko:'로드맵' },
-  'road-h2':  { en:'From 20 farms to 10,000.<br>A clear path to scale.', ko:'20개 농가에서 10,000개로.<br>명확한 성장 경로.' },
-  'team-tag':  { en:'Team',           ko:'팀' },
-  'team-h2':   { en:'Built by a founder who<br>built the tech from scratch.', ko:'기술을 처음부터 직접 구축한<br>창업자가 만들었습니다.' },
-  'team-role': { en:'Founder & CEO',  ko:'창업자 & CEO' },
-  'team-desc': { en:'Previously built S-SMDC (AI-optimized renewable energy data center). Independently developed Terravo\'s full AI pipeline — satellite data ingestion, RandomForest MRV model (R²=0.980, ±2.9%), FastAPI backend, and full-stack dashboard. Issued real Verra-eligible MRV report for Khiet Tam Cooperative, Can Tho. Fluent in English; experienced in global IR and cross-border partnership development.', ko:'S-SMDC(AI 최적화 재생에너지 데이터센터) 창업 이력 보유. Terravo의 전체 AI 파이프라인 — 위성 데이터 수집, RandomForest MRV 모델(R²=0.980, ±2.9%), FastAPI 백엔드, 풀스택 대시보드를 단독으로 개발. Can Tho Khiet Tam 협동조합의 실제 Verra 적격 MRV 리포트 발행 완료. 영어 유창, 글로벌 IR 및 해외 파트너십 개발 경험 보유.' },
-  'ct-tag':  { en:'Get In Touch',  ko:'문의하기' },
-  'ct-h2':   { en:'Let\'s build the carbon<br>data layer together.', ko:'함께 탄소 데이터<br>인프라를 만들어 나가요.' },
-  'ct-sub':  { en:'For investment inquiries, pilot partnerships, or technical questions.', ko:'투자 문의, 파일럿 파트너십, 기술 질문 모두 환영합니다.' },
-  'ct-btn':  { en:'Send Message',  ko:'메시지 보내기' },
-  'ct-direct': { en:'Or email directly:', ko:'직접 이메일:' },
-  'ct-success-t': { en:'Message sent!',                          ko:'전송 완료!' },
-  'ct-success-s': { en:'We\'ll get back to you within 24 hours.', ko:'24시간 내에 답변 드리겠습니다.' },
-  'nav-invest': { en:'Invest →',  ko:'투자하기 →' },
-  'ft-how':     { en:'How It Works', ko:'작동 방식' },
-  'ft-tech':    { en:'Tech',         ko:'기술' },
-  'ft-demo':    { en:'Demo',         ko:'데모' },
-  'ft-contact': { en:'Contact',      ko:'문의' },
-};
-
-function toggleLang() {
-  currentLang = currentLang === 'en' ? 'ko' : 'en';
-  document.getElementById('lang-btn').textContent = currentLang === 'en' ? 'KO' : 'EN';
-  applyLang();
-}
-
-function applyLang() {
-  const l = currentLang;
-  const t = i18n;
-
-  // Hero
-  const pill = document.querySelector('.hero-pill');
-  if(pill) pill.innerHTML = '<div class="hero-pill-dot"></div> ' + t['hero-pill'][l];
-  const h1 = document.querySelector('.hero h1');
-  if(h1) h1.innerHTML = t['hero-h1'][l];
-  const heroSub = document.querySelector('.hero-sub');
-  if(heroSub) heroSub.textContent = t['hero-sub'][l];
-  const heroBtns = document.querySelectorAll('.hero-actions a');
-  if(heroBtns[0]) heroBtns[0].textContent = t['hero-btn1'][l];
-  if(heroBtns[1]) heroBtns[1].textContent = t['hero-btn2'][l];
-
-  // Stats
-  document.querySelectorAll('.stat-desc').forEach((el,i) => {
-    const k = 'stat'+(i+1); if(t[k]) el.textContent = t[k][l];
-  });
-
-  // How It Works
-  const howSec = document.getElementById('how');
-  if(howSec) {
-    const tag = howSec.querySelector('.section-tag'); if(tag) tag.textContent = t['how-tag'][l];
-    const h2  = howSec.querySelector('.section-title'); if(h2) h2.innerHTML = t['how-h2'][l];
-    howSec.querySelectorAll('.how-title').forEach((el,i) => { const k='how-t'+(i+1); if(t[k]) el.textContent=t[k][l]; });
-    howSec.querySelectorAll('.how-desc').forEach((el,i)  => { const k='how-d'+(i+1); if(t[k]) el.textContent=t[k][l]; });
-  }
-
-  // Technology
-  const techSec = document.getElementById('technology');
-  if(techSec) {
-    const tag = techSec.querySelector('.section-tag'); if(tag) tag.textContent = t['tech-tag'][l];
-    const h2  = techSec.querySelector('.section-title'); if(h2) h2.innerHTML = t['tech-h2'][l];
-  }
-
-  // Markets
-  const mktSec = document.getElementById('markets');
-  if(mktSec) {
-    const tag = mktSec.querySelector('.section-tag'); if(tag) tag.textContent = t['mkt-tag'][l];
-    const h2  = mktSec.querySelector('.section-title'); if(h2) h2.innerHTML = t['mkt-h2'][l];
-    const sub = mktSec.querySelector('.section-sub'); if(sub) sub.textContent = t['mkt-sub'][l];
-  }
-
-  // Roadmap (section 태그로 찾기)
-  document.querySelectorAll('section').forEach(sec => {
-    const tag = sec.querySelector('.section-tag');
-    if(tag && (tag.textContent.trim()==='Roadmap' || tag.textContent.trim()==='로드맵')) {
-      tag.textContent = t['road-tag'][l];
-      const h2 = sec.querySelector('.section-title'); if(h2) h2.innerHTML = t['road-h2'][l];
-    }
-    if(tag && (tag.textContent.trim()==='Team' || tag.textContent.trim()==='팀')) {
-      tag.textContent = t['team-tag'][l];
-      const h2 = sec.querySelector('.section-title'); if(h2) h2.innerHTML = t['team-h2'][l];
-    }
-  });
-
-  // Team
-  const teamRole = document.querySelector('.team-role'); if(teamRole) teamRole.textContent = t['team-role'][l];
-  const teamDesc = document.querySelector('.team-desc'); if(teamDesc) teamDesc.textContent = t['team-desc'][l];
-
-  // Contact
-  const ctSec = document.getElementById('contact');
-  if(ctSec) {
-    const tag = ctSec.querySelector('.section-tag'); if(tag) tag.textContent = t['ct-tag'][l];
-    const h2  = ctSec.querySelector('.section-title'); if(h2) h2.innerHTML = t['ct-h2'][l];
-    const sub = ctSec.querySelector('p[style*="margin-bottom:48px"]'); if(sub) sub.textContent = t['ct-sub'][l];
-    const submitBtn = document.getElementById('cf-submit');
-    if(submitBtn && !submitBtn.disabled) submitBtn.innerHTML = '<span>'+t['ct-btn'][l]+'</span><span style="font-size:16px">→</span>';
-    const succT = ctSec.querySelector('#cf-success div:nth-child(2)'); if(succT) succT.textContent = t['ct-success-t'][l];
-    const succS = ctSec.querySelector('#cf-success div:nth-child(3)'); if(succS) succS.textContent = t['ct-success-s'][l];
-    const direct = ctSec.querySelector('[style*="margin-top:24px"] span:first-child'); if(direct) direct.textContent = t['ct-direct'][l];
-  }
-
-  // Nav
-  const navInvest = document.querySelector('.nav-cta'); if(navInvest) navInvest.textContent = t['nav-invest'][l];
-
-  // Footer
-  const ftLinks = document.querySelectorAll('.footer-links a');
-  const ftk = ['ft-how','ft-tech','ft-demo','ft-contact'];
-  ftLinks.forEach((el,i) => { if(t[ftk[i]]) el.textContent = t[ftk[i]][l]; });
-}
+// ── (lang toggle removed)
 
 // API status check
 async function checkApi() {
