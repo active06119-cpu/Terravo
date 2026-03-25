@@ -1363,14 +1363,14 @@ function submitForm(e) {
   btn.innerHTML = '<span>Sending...</span>';
 
   const fd = new FormData();
-  fd.append('entry.1177297341', name);
-  fd.append('entry.490570797',  org);
-  fd.append('entry.1736363953', email);
-  fd.append('entry.1883517065', type);
-  fd.append('entry.829674090',  message);
+  fd.append('name',         name);
+  fd.append('organization', org);
+  fd.append('email',        email);
+  fd.append('type',         type);
+  fd.append('message',      message);
 
-  fetch('https://docs.google.com/forms/d/e/1FAIpQLSfQANoz974ZosxY7j_v1wYRdiW8JUzHVKDpYpkkqHyrbGcyRA/formResponse',
-    { method:'POST', body:fd, mode:'no-cors' })
+  fetch('https://formspree.io/f/xykbgpaz',
+    { method:'POST', body:fd, headers:{ 'Accept':'application/json' } })
     .then(() => {
       success.style.display = 'block';
       error.style.display   = 'none';
